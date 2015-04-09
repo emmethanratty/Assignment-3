@@ -1,0 +1,11 @@
+<arcade>
+	<player>
+		<up>w</up>
+		<down>s</down>
+		<left>a</left>
+		<right>d</right>
+		<start>q</start>
+		<button1>e</button1>
+		<button2>r</button2>
+	</player>
+</arcade>
