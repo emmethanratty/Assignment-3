@@ -10,6 +10,12 @@ import processing.data.XML;
 
 public class Assignment3 extends PApplet{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1081748086625648614L;
+	
+	
 	int gHeight = 420;
 	boolean[] keys = new boolean[526];
 	
@@ -288,7 +294,7 @@ public class Assignment3 extends PApplet{
 	    {
 	      if(option == '1')
 	      {
-	        if(pos.y < gHeight - PH/2)
+	        if(pos.y < gHeight)
 	          {        
 	               nofloor = true;
 	          } 
