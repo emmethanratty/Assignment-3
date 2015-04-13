@@ -9,6 +9,9 @@ public class Assignment3 extends PApplet{
 	boolean[] keys = new boolean[526];
 	
 	Man p;
+	GameObjects[] gameObjects;
+	
+	Star star;
 	
 	PImage moon;
 	PImage title;
@@ -16,11 +19,13 @@ public class Assignment3 extends PApplet{
 	PImage upgrade;
 	PImage stage;
 	PImage spaceman;
+	PImage starI;
 	
 	char option ='0'; 
 	
 	int menuW = 400;
 	int menuH = 100;
+	int gHeight = 420;
 	
 	float counter;
 			
@@ -28,7 +33,14 @@ public class Assignment3 extends PApplet{
 	{
 		 size(1000,600);
 		 
+		// gameObjects = new GameObjects[1];
+		 
+		 
 		 setUpPlayerControllers();
+		 
+		 //gameObjects[0] = new Fall();
+		 
+		 star = new Star(gHeight);
 		 
 		 moon = loadImage("moon.png");
 		 title = loadImage("Title3.png");
@@ -36,7 +48,7 @@ public class Assignment3 extends PApplet{
 		 upgrade = loadImage("Upgrade.png");
 		 stage = loadImage("Stage.png");
 		 spaceman = loadImage("Spaceman.png");
-		 
+		 starI = loadImage("star.png");		 
 		 counter=0.0f;
 		 
 	}
@@ -51,20 +63,26 @@ public class Assignment3 extends PApplet{
 				image(title,WIDTH/2 + 200,20,600,200);
 				image(start,WIDTH/2 + 250,250,menuW,menuH);
 				image(upgrade,WIDTH/2 + 250,400,menuW,menuH);
-				
-				
+								
 				break;
 			}
 			case '1':
 			{
 				background(stage);
 				
-				
 				p.run();
+				//gameObjects[0].run();
+				
+				star.run();
+				
+				image(starI,star.SX,250,10,10);
+				
+				
 				break;
 			}
 			case '2':
 			{
+				option = '0';
 				background(0);
 				
 				break;
@@ -129,7 +147,6 @@ public class Assignment3 extends PApplet{
 	  {
 	    return DOWN;
 	  }
-	  //.. Others to follow
 	  return value.charAt(0);  
 	}//end buttonNametoKey()
 
@@ -246,7 +263,6 @@ public class Assignment3 extends PApplet{
 	    {
 	      if(falling == false)
 	      {
-	        //checks ti make sure player is still on screen
 	        if(pos.x > 0)
 	        {
 	          pos.x -= moveS;
@@ -255,7 +271,6 @@ public class Assignment3 extends PApplet{
 	        }
 	      }
 	    }
-	    //changes rollspeed back to normal
 	    else
 	    {
 	      rollspeed = 4*(acc/100);
@@ -272,7 +287,6 @@ public class Assignment3 extends PApplet{
 	        }
 	      }
 	    }
-	    //changes rollspeed back to normal
 	     else
 	    {
 	      rollspeed = 4*(acc/100);
@@ -287,17 +301,6 @@ public class Assignment3 extends PApplet{
 	    text("Acceleration: " + acc,30,100);
 	    
 	     image(spaceman,pos.x - PW/2,pos.y,PW,PH);   
-	     /*
-	     translate(pos.x, pos.y);
-	       
-	     rotate(counter*TWO_PI/360);
-	     
-	     translate(-PW/2, -PW/2);
-	       
-	     image(spaceman,0,0,PW,PH);
-	     
-	     counter += rollspeed *(acc/100);
-	     */
 	  } 
 	 
 	  //makes gravity
@@ -332,4 +335,131 @@ public class Assignment3 extends PApplet{
 	     }
 	   }
 	}
+	
+	class Fall extends GameObjects
+	{
+	  float gHeight;
+	  float fallX;
+	  float fallacc;
+	  float FW;
+	  float FH;
+	  
+	   Fall()
+	  {
+	     fallacc = 4;
+	     FW = 200;
+	     FH = 300;
+	     gHeight = 500;
+	     fallX = random(2000,3000);
+	  }//end Fall constuctor
+	 
+	 //runs the methods
+	  public void run()
+	 {
+	   display();
+	   move();
+	   reset();
+	   stopped();
+	 }//end run()
+
+	 //display code
+	 public void display()
+	 {
+	   fill(0);
+	   stroke(0);
+	   rect(fallX,gHeight,FW,FH);
+	 }// end display()
+	 
+	 //movement code
+	 public void move()
+	 {
+	     fallX -= fallacc*(p.acc/100);; 
+	 }//end move()
+	 
+	 //reset code
+	 public void reset()
+	 {
+	    if(fallX < 0 - FW)
+	     {
+	        fallX = random(1500,2500);        
+	     } 
+	 }//end reset
+	 
+	 //stopped code
+	 public void stopped()
+	 {
+	    //checks to see if player falls down the hole
+	    if( p.pos.x > fallX + p.PW/2 && p.pos.x < fallX + FW )
+	    {
+	      if(p.pos.y >= gHeight - (p.PH)/2)
+	      {
+	        p.nofloor = true;
+	        p.acc = 10;
+	        p.falling = true;
+	        
+	        
+	        if(p.pos.y > height)
+	        {
+	           option = '3';
+	           p.pos.y = p.gHeight - p.PH/2;
+	           p.acc = 300;
+	           fallX = random(1500,2500);
+	           p.nofloor = false;
+	           p.Gdis = p.distance;
+	           p.distance = 0;
+	        }//end inner if
+	      }//end inner if
+	    }//end outer if
+	 }//end stopped()
+	}//end class
+	class GameObjects
+	{
+	  int gHeight;
+	   
+	 public void run()
+	 {
+	   println("run getting called");
+	 } 
+
+	}
+	
+	class Star
+	{
+	  int gHeight;
+	  float SH = random(2,10);
+	  float SW;
+	  float SX = random(0,1000);
+	  float Sacc;
+	   
+	   Star(int gHeight)
+	  {
+	    SW = 5;
+	    Sacc = 4;
+	    this.gHeight = gHeight;
+	  } 
+	  
+	  public void run()
+	  {
+	     move();
+	     reset(); 
+	  }
+	  // moves grass
+	  public void move()
+	  {
+	     SX -= Sacc *(p.acc/100);
+	  }
+	  // resets grass
+	  public void reset()
+	  {
+	     if(SX < 0 - SW)
+	     {
+	        SX = random(1000,1500);
+	        SH = random(2,5);
+	        SW = random(2,5);
+	     }
+	  }
+	}
+	
+	
+	
 }
