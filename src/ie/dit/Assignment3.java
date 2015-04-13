@@ -19,6 +19,7 @@ public class Assignment3 extends PApplet{
 	ArrayList<Star> star = new ArrayList<Star>(gHeight);
 	
 	Earth earth = new Earth(this);
+	Fuel fuel;
 	
 	
 	PImage moon;
@@ -29,6 +30,7 @@ public class Assignment3 extends PApplet{
 	PImage spaceman;
 	PImage starI;
 	PImage earthI;
+	PImage fuelI;
 
 	
 	
@@ -60,8 +62,11 @@ public class Assignment3 extends PApplet{
 		 spaceman = loadImage("Spaceman.png");
 		 starI = loadImage("star.png");		
 		 earthI = loadImage("earth2.png");
+		 fuelI = loadImage("fuel.png");
 		 
 		 counter=0.0f;
+		 
+		 fuel = new Fuel(this);
 		 
 		 for(int i = 0; i < 100; i++)
 		   {
@@ -100,9 +105,15 @@ public class Assignment3 extends PApplet{
 			        star1.run();
 			      }
 				 
-				 image(earthI, earth.EX, earth.EY,earth.EW,earth.EY);	
+				 image(earthI, earth.EX, earth.EY,earth.EW,earth.EY);
+				 
+				 image(fuelI,fuel.FX,fuel.FY,fuel.FW,fuel.FH);
 				 
 				 p.run();
+				 
+				 fuel.run();
+				 
+				 hitbox();
 				
 				
 				
@@ -117,6 +128,17 @@ public class Assignment3 extends PApplet{
 			}
 		}
 	}
+	
+	public void hitbox()
+	{
+	   if(dist(p.pos.x,p.pos.y,fuel.FX,fuel.FY) <= p.PH) 
+	     {
+	        fuel.FX = random(2000,fuel.frequency);
+	        fuel.FY = random(50,458);
+	        p.acc = p.acc + 20;
+	     }
+	     println(dist(p.pos.x,p.pos.y,fuel.FX,fuel.FY));
+	}//end hitbox
 	
 	public void mousePressed()
 	{
@@ -309,6 +331,7 @@ public class Assignment3 extends PApplet{
 	  //displays text and images  
 	  public void display()
 	  { 
+		fill(255);
 	    textSize(30);
 	    text("Distance: " + distance,30,50);
 	    text("Acceleration: " + acc,30,100);
@@ -414,7 +437,7 @@ public class Assignment3 extends PApplet{
 	        if(p.pos.y > height)
 	        {
 	           option = '0';
-	           p.pos.y = p.gHeight ;
+	           p.pos.y = p.gHeight;
 	           p.acc = 300;
 	           fallX = random(1500,2500);
 	           p.nofloor = false;
