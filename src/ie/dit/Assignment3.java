@@ -10,10 +10,15 @@ import processing.data.XML;
 
 public class Assignment3 extends PApplet{
 	
+	int gHeight = 420;
 	boolean[] keys = new boolean[526];
 	
 	Man p;
 	GameObjects[] gameObjects;
+	
+	ArrayList<Star> star = new ArrayList<Star>(gHeight);
+	
+	Earth earth = new Earth(this);
 	
 	
 	PImage moon;
@@ -23,10 +28,8 @@ public class Assignment3 extends PApplet{
 	PImage stage;
 	PImage spaceman;
 	PImage starI;
-	
-	int gHeight = 420;
-	
-	ArrayList<Star> star = new ArrayList<Star>(gHeight);
+	PImage earthI;
+
 	
 	
 	
@@ -55,7 +58,9 @@ public class Assignment3 extends PApplet{
 		 upgrade = loadImage("Upgrade.png");
 		 stage = loadImage("Stage.png");
 		 spaceman = loadImage("Spaceman.png");
-		 starI = loadImage("star.png");		 
+		 starI = loadImage("star.png");		
+		 earthI = loadImage("earth2.png");
+		 
 		 counter=0.0f;
 		 
 		 for(int i = 0; i < 100; i++)
@@ -83,6 +88,7 @@ public class Assignment3 extends PApplet{
 				background(stage);
 				
 				p.run();
+				earth.run();
 				//gameObjects[0].run();
 				
 				 for(int i = 0; i < 100; i++)
@@ -94,7 +100,8 @@ public class Assignment3 extends PApplet{
 			      {
 			        star1.run();
 			      }
-				
+				 
+				 image(earthI, earth.EX, earth.EY,earth.EW,earth.EY);				
 				
 				
 				
