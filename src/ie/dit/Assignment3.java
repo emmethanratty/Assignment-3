@@ -45,12 +45,12 @@ public class Assignment3 extends PApplet{
 	{
 		 size(1000,600);
 		 
-		// gameObjects = new GameObjects[1];
+		 gameObjects = new GameObjects[1];
 		 
 		 
 		 setUpPlayerControllers();
 		 
-		 //gameObjects[0] = new Fall();
+		 gameObjects[0] = new Fall();
 		 
 		 moon = loadImage("moon.png");
 		 title = loadImage("Title3.png");
@@ -87,9 +87,8 @@ public class Assignment3 extends PApplet{
 			{
 				background(stage);
 				
-				p.run();
+				gameObjects[0].run();
 				earth.run();
-				//gameObjects[0].run();
 				
 				 for(int i = 0; i < 100; i++)
 			      {
@@ -101,7 +100,9 @@ public class Assignment3 extends PApplet{
 			        star1.run();
 			      }
 				 
-				 image(earthI, earth.EX, earth.EY,earth.EW,earth.EY);				
+				 image(earthI, earth.EX, earth.EY,earth.EW,earth.EY);	
+				 
+				 p.run();
 				
 				
 				
@@ -192,7 +193,7 @@ public class Assignment3 extends PApplet{
 	  float PX = 50;
 	  float PY;
 	  float gravityF = 5;
-	  float currentJH = 400;
+	  float currentJH = 300;
 	  float jumpH = currentJH;
 	  float rollspeed = 4;
 	  float distance = 0;
@@ -245,6 +246,7 @@ public class Assignment3 extends PApplet{
 	  
 	  public void update()
 	  {
+		//System.out.println(option);
 	    if (checkKey(up))
 	    {
 	      if(option == '1')
@@ -264,7 +266,6 @@ public class Assignment3 extends PApplet{
 	    {
 	      if(option == '1')
 	      {
-	        //checks ti make sure player is still on screen
 	        if(pos.y < gHeight - PH/2)
 	          {        
 	               nofloor = true;
@@ -339,7 +340,7 @@ public class Assignment3 extends PApplet{
 	       // checks to see if stopped
 	       if( acc < 0 )
 	       {
-	          option = '3';
+	          option = '0';
 	         Gdis = distance;
 	         distance= 0f;
 	         acc = Cacc; 
@@ -412,8 +413,8 @@ public class Assignment3 extends PApplet{
 	        
 	        if(p.pos.y > height)
 	        {
-	           option = '3';
-	           p.pos.y = p.gHeight - p.PH/2;
+	           option = '0';
+	           p.pos.y = p.gHeight ;
 	           p.acc = 300;
 	           fallX = random(1500,2500);
 	           p.nofloor = false;
