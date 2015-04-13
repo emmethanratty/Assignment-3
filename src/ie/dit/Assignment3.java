@@ -1,7 +1,11 @@
 package ie.dit;
 
-import processing.core.*;
-import processing.data.*;
+import java.util.ArrayList;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.core.PVector;
+import processing.data.XML;
 
 
 public class Assignment3 extends PApplet{
@@ -11,7 +15,6 @@ public class Assignment3 extends PApplet{
 	Man p;
 	GameObjects[] gameObjects;
 	
-	Star star;
 	
 	PImage moon;
 	PImage title;
@@ -21,11 +24,17 @@ public class Assignment3 extends PApplet{
 	PImage spaceman;
 	PImage starI;
 	
+	int gHeight = 420;
+	
+	ArrayList<Star> star = new ArrayList<Star>(gHeight);
+	
+	
+	
 	char option ='0'; 
 	
 	int menuW = 400;
 	int menuH = 100;
-	int gHeight = 420;
+	
 	
 	float counter;
 			
@@ -40,8 +49,6 @@ public class Assignment3 extends PApplet{
 		 
 		 //gameObjects[0] = new Fall();
 		 
-		 star = new Star(gHeight);
-		 
 		 moon = loadImage("moon.png");
 		 title = loadImage("Title3.png");
 		 start = loadImage("Start.png");
@@ -50,6 +57,11 @@ public class Assignment3 extends PApplet{
 		 spaceman = loadImage("Spaceman.png");
 		 starI = loadImage("star.png");		 
 		 counter=0.0f;
+		 
+		 for(int i = 0; i < 100; i++)
+		   {
+		     star.add(new Star(gHeight));
+		   }
 		 
 	}
 
@@ -73,9 +85,17 @@ public class Assignment3 extends PApplet{
 				p.run();
 				//gameObjects[0].run();
 				
-				star.run();
+				 for(int i = 0; i < 100; i++)
+			      {
+			        image(starI,star.get(i).SX,star.get(i).SY,star.get(i).SW,star.get(i).SH);
+			      }
+				 
+				 for(Star star1 : star) 
+			      {
+			        star1.run();
+			      }
 				
-				image(starI,star.SX,250,10,10);
+				
 				
 				
 				break;
@@ -131,24 +151,9 @@ public class Assignment3 extends PApplet{
 	public char buttonNameToKey(XML xml, String buttonName)
 	{
 	  String value =  xml.getChild(buttonName).getContent();
-	  if ("LEFT".equalsIgnoreCase(value))
-	  {
-	    return LEFT;
-	  }
-	  if ("RIGHT".equalsIgnoreCase(value))
-	  {
-	    return RIGHT;
-	  }
-	  if ("UP".equalsIgnoreCase(value))
-	  {
-	    return UP;
-	  }
-	  if ("DOWN".equalsIgnoreCase(value))
-	  {
-	    return DOWN;
-	  }
+	
 	  return value.charAt(0);  
-	}//end buttonNametoKey()
+	}
 
 	public void setUpPlayerControllers()
 	{
@@ -427,14 +432,15 @@ public class Assignment3 extends PApplet{
 	{
 	  int gHeight;
 	  float SH = random(2,10);
-	  float SW;
+	  float SW = random(2,10);
 	  float SX = random(0,1000);
+	  float SY = random(0, 450);
 	  float Sacc;
 	   
 	   Star(int gHeight)
 	  {
 	    SW = 5;
-	    Sacc = 4;
+	    Sacc = 1f;
 	    this.gHeight = gHeight;
 	  } 
 	  
@@ -454,6 +460,7 @@ public class Assignment3 extends PApplet{
 	     if(SX < 0 - SW)
 	     {
 	        SX = random(1000,1500);
+	        SY = random(0, 450);
 	        SH = random(2,5);
 	        SW = random(2,5);
 	     }
