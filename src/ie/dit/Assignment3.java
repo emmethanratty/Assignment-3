@@ -24,6 +24,10 @@ public class Assignment3 extends PApplet{
 	
 	ArrayList<Star> star = new ArrayList<Star>(gHeight);
 	
+	Gameover gameover;
+	Upgrade upgrade;
+	Debris debris;
+	
 	Earth earth = new Earth(this);
 	Fuel fuel;
 	
@@ -31,17 +35,20 @@ public class Assignment3 extends PApplet{
 	PImage moon;
 	PImage title;
 	PImage start;
-	PImage upgrade;
+	PImage upgradeI;
 	PImage stage;
 	PImage spaceman;
 	PImage starI;
 	PImage earthI;
 	PImage fuelI;
+	PImage gameoverI;
+	PImage debrisI;
 
 	
 	
 	
 	char option ='0'; 
+	char gameO;
 	
 	int menuW = 400;
 	int menuH = 100;
@@ -54,6 +61,9 @@ public class Assignment3 extends PApplet{
 		 size(1000,600);
 		 
 		 gameObjects = new GameObjects[1];
+		 gameover = new Gameover(this);
+		 upgrade = new Upgrade(this);
+		 debris = new Debris(this);
 		 
 		 
 		 setUpPlayerControllers();
@@ -63,13 +73,14 @@ public class Assignment3 extends PApplet{
 		 moon = loadImage("moon.png");
 		 title = loadImage("Title3.png");
 		 start = loadImage("Start.png");
-		 upgrade = loadImage("Upgrade.png");
+		 upgradeI = loadImage("Upgrade.png");
 		 stage = loadImage("Stage.png");
 		 spaceman = loadImage("Spaceman.png");
 		 starI = loadImage("star.png");		
 		 earthI = loadImage("earth2.png");
 		 fuelI = loadImage("fuel.png");
-		 
+		 gameoverI = loadImage("gameover.png");
+		 debrisI = loadImage("crate.png");
 		 counter=0.0f;
 		 
 		 fuel = new Fuel(this);
@@ -87,15 +98,17 @@ public class Assignment3 extends PApplet{
 		{
 			case '0':
 			{
+				//menu
 				background(moon);
 				image(title,WIDTH/2 + 200,20,600,200);
 				image(start,WIDTH/2 + 250,250,menuW,menuH);
-				image(upgrade,WIDTH/2 + 250,400,menuW,menuH);
+				image(upgradeI,WIDTH/2 + 250,400,menuW,menuH);
 								
 				break;
 			}
 			case '1':
 			{
+				//game
 				background(stage);
 				
 				gameObjects[0].run();
@@ -115,20 +128,37 @@ public class Assignment3 extends PApplet{
 				 
 				 image(fuelI,fuel.FX,fuel.FY,fuel.FW,fuel.FH);
 				 
+				 //image(debrisI,debris.DX,debris.DY,debris.DW,debris.DH);
+				 
 				 p.run();
 				 
 				 fuel.run();
 				 
+				 debris.run();
+				 
 				 hitbox();
-				
+			
 				
 				
 				break;
 			}
 			case '2':
 			{
-				option = '0';
-				background(0);
+				//upgrade
+				background(moon);
+				upgrade.run();
+				
+				
+				break;
+			}
+			case '3':
+			{
+				
+				//gameover
+				background(moon);
+				gameover.run();
+				image(gameoverI, width/2 - 400,10, 600,200);
+				
 				
 				break;
 			}
@@ -137,35 +167,47 @@ public class Assignment3 extends PApplet{
 	
 	public void hitbox()
 	{
-	   if(dist(p.pos.x,p.pos.y,fuel.FX,fuel.FY) <= p.PH) 
+	   if(p.pos.x + p.PW > fuel.FX && p.pos.x < fuel.FX + fuel.FW && p.pos.y + p.PY > fuel.FY && p.pos.y < fuel.FY + fuel.FH ) 
 	     {
 	        fuel.FX = random(2000,fuel.frequency);
 	        fuel.FY = random(50,458);
 	        p.acc = p.acc + 20;
 	     }
-	     println(dist(p.pos.x,p.pos.y,fuel.FX,fuel.FY));
+	   
+	   if(p.pos.x + debris.DW > debris.DX && p.pos.x < debris.DX + debris.DW && p.pos.y + p.PY > debris.DY && p.pos.y < debris.DY + debris.DH )
+	     {
+	        debris.DX = random(2000,2100);
+	        debris.DY = random(50,gHeight);
+	        //p.acc = p.acc - 50;
+	     }
 	}//end hitbox
 	
 	public void mousePressed()
 	{
-		//System.out.println("Pressed");
-		if(mouseX > (WIDTH/2 + 250) && mouseX < (WIDTH/2 + 250) + menuW )
+		if(option == '0')
 		{
-			if(mouseY > 250 && mouseY < 250 + menuH)
+			//System.out.println("Pressed");
+			if(mouseX > (WIDTH/2 + 250) && mouseX < (WIDTH/2 + 250) + menuW )
 			{
-				option = '1';
-				System.out.println("Pressed");
+				if(mouseY > 250 && mouseY < 250 + menuH)
+				{
+					option = '1';
+					System.out.println("Pressed");
+					gameO = '2';
+				}
+			}
+			if(mouseX > (WIDTH/2 + 250) && mouseX < (WIDTH/2 + 250) + menuW )
+			{
+				if(mouseY > 400 && mouseY < 400 + menuH)
+				{
+					option = '2';
+					System.out.println("Pressed2");
+				}
 			}
 		}
-		if(mouseX > (WIDTH/2 + 250) && mouseX < (WIDTH/2 + 250) + menuW )
+		if(option == '3')
 		{
-			if(mouseY > 400 && mouseY < 400 + menuH)
-			{
-				option = '2';
-				System.out.println("Pressed2");
-			}
-			//p.option = '1';
-			//System.out.println("Pressed");
+			gameO = '0';
 		}
 	}
 	
@@ -339,8 +381,8 @@ public class Assignment3 extends PApplet{
 	  { 
 		fill(255);
 	    textSize(30);
-	    text("Distance: " + distance,30,50);
-	    text("Acceleration: " + acc,30,100);
+	    text("Distance: " + distance+ "KM", 30, 50);
+	    text("Power: " + acc + "LTR",30,100);
 	    
 	     image(spaceman,pos.x - PW/2,pos.y,PW,PH);   
 	  } 
@@ -369,7 +411,7 @@ public class Assignment3 extends PApplet{
 	       // checks to see if stopped
 	       if( acc < 0 )
 	       {
-	          option = '0';
+	          option = '3';
 	         Gdis = distance;
 	         distance= 0f;
 	         acc = Cacc; 
@@ -442,7 +484,7 @@ public class Assignment3 extends PApplet{
 	        
 	        if(p.pos.y > height)
 	        {
-	           option = '0';
+	           option = '3';
 	           p.pos.y = p.gHeight;
 	           p.acc = 300;
 	           fallX = random(1500,2500);
@@ -503,6 +545,15 @@ public class Assignment3 extends PApplet{
 	     }
 	  }
 	}
+	
+	 static public void main(String[] passedArgs) {
+		    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "OPassignment2" };
+		    if (passedArgs != null) {
+		      PApplet.main(concat(appletArgs, passedArgs));
+		    } else {
+		      PApplet.main(appletArgs);
+		    }
+		  }
 	
 	
 	
