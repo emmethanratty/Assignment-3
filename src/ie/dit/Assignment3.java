@@ -6,6 +6,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.XML;
+import ddf.minim.*;
+
 
 
 public class Assignment3 extends PApplet{
@@ -14,6 +16,10 @@ public class Assignment3 extends PApplet{
 	 * 
 	 */
 	private static final long serialVersionUID = -1081748086625648614L;
+	
+	Minim minim;
+	AudioPlayer rocket;
+	AudioPlayer button;
 	
 	
 	int gHeight = 500;
@@ -63,6 +69,10 @@ public class Assignment3 extends PApplet{
 	public void setup()
 	{
 		 size(1000,600);
+		 
+		 minim = new Minim(this);
+		 rocket = minim.loadFile("rocket.wav");
+		 button = minim.loadFile("button.wav");
 		 
 		 gameObjects = new GameObjects[1];
 		 gameover = new Gameover(this);
@@ -214,6 +224,8 @@ public class Assignment3 extends PApplet{
 			{
 				if(mouseY > 250 && mouseY < 250 + menuH)
 				{
+					button.rewind();
+					button.play();
 					option = '1';
 					System.out.println("Pressed");
 					gameO = '2';
@@ -223,6 +235,8 @@ public class Assignment3 extends PApplet{
 			{
 				if(mouseY > 400 && mouseY < 400 + menuH)
 				{
+					button.rewind();
+					button.play();
 					option = '2';
 					System.out.println("Pressed2");
 				}
@@ -230,6 +244,8 @@ public class Assignment3 extends PApplet{
 		}
 		if(option == '3')
 		{
+			button.rewind();
+			button.play();
 			gameO = '0';
 		}
 	}
@@ -342,6 +358,8 @@ public class Assignment3 extends PApplet{
 		//System.out.println(option);
 	    if (checkKey(up))
 	    {
+	      rocket.rewind();
+	      rocket.play();
 	      if(option == '1')
 	      {
 	         if(pos.y > jumpH && nofloor == false)
