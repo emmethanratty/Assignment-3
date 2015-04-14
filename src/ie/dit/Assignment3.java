@@ -16,14 +16,16 @@ public class Assignment3 extends PApplet{
 	private static final long serialVersionUID = -1081748086625648614L;
 	
 	
-	int gHeight = 420;
+	int gHeight = 500;
 	boolean[] keys = new boolean[526];
 	
 	Man p;
 	GameObjects[] gameObjects;
 	
 	ArrayList<Star> star = new ArrayList<Star>(gHeight);
+	ArrayList<Rock> rock = new ArrayList<Rock>();
 	
+	Ship ship;
 	Gameover gameover;
 	Upgrade upgrade;
 	Debris debris;
@@ -43,6 +45,8 @@ public class Assignment3 extends PApplet{
 	PImage fuelI;
 	PImage gameoverI;
 	PImage debrisI;
+	PImage shipI;
+	PImage rockI;
 
 	
 	
@@ -64,12 +68,13 @@ public class Assignment3 extends PApplet{
 		 gameover = new Gameover(this);
 		 upgrade = new Upgrade(this);
 		 debris = new Debris(this);
-		 
+		 ship = new Ship(this);		 
 		 
 		 setUpPlayerControllers();
 		 
 		 gameObjects[0] = new Fall();
 		 
+		 rockI = loadImage("rock.png");
 		 moon = loadImage("moon.png");
 		 title = loadImage("Title3.png");
 		 start = loadImage("Start.png");
@@ -81,6 +86,7 @@ public class Assignment3 extends PApplet{
 		 fuelI = loadImage("fuel.png");
 		 gameoverI = loadImage("gameover.png");
 		 debrisI = loadImage("crate.png");
+		 shipI = loadImage("spaceship.png");
 		 counter=0.0f;
 		 
 		 fuel = new Fuel(this);
@@ -88,6 +94,10 @@ public class Assignment3 extends PApplet{
 		 for(int i = 0; i < 100; i++)
 		   {
 		     star.add(new Star(gHeight));
+		   }
+		 for(int i = 0; i < 10; i++)
+		   {
+		     rock.add(new Rock());
 		   }
 		 
 	}
@@ -113,6 +123,7 @@ public class Assignment3 extends PApplet{
 				
 				gameObjects[0].run();
 				earth.run();
+				ship.run();
 				
 				 for(int i = 0; i < 100; i++)
 			      {
@@ -124,7 +135,19 @@ public class Assignment3 extends PApplet{
 			        star1.run();
 			      }
 				 
+				 for(int i = 0; i < 10; i++)
+			      {
+			        image(rockI,rock.get(i).RX,rock.get(i).RY,rock.get(i).RW,rock.get(i).RH);
+			      }
+				 
+				 for(Rock rock1 : rock) 
+			      {
+			        rock1.run();
+			      }
+				 
 				 image(earthI, earth.EX, earth.EY,earth.EW,earth.EY);
+				 
+				 image(shipI, ship.SX, ship.SY,ship.SW,ship.SH);
 				 
 				 image(fuelI,fuel.FX,fuel.FY,fuel.FW,fuel.FH);
 				 
@@ -167,7 +190,7 @@ public class Assignment3 extends PApplet{
 	
 	public void hitbox()
 	{
-	   if(p.pos.x + p.PW > fuel.FX && p.pos.x < fuel.FX + fuel.FW && p.pos.y + p.PY > fuel.FY && p.pos.y < fuel.FY + fuel.FH ) 
+	   if(p.pos.x + p.PW > fuel.FX && p.pos.x < fuel.FX + fuel.FW && p.pos.y + p.PW > fuel.FY && p.pos.y < fuel.FY + fuel.FH ) 
 	     {
 	        fuel.FX = random(2000,fuel.frequency);
 	        fuel.FY = random(50,458);
@@ -178,7 +201,7 @@ public class Assignment3 extends PApplet{
 	     {
 	        debris.DX = random(2000,2100);
 	        debris.DY = random(50,gHeight);
-	        //p.acc = p.acc - 50;
+	        p.acc = p.acc - 50;
 	     }
 	}//end hitbox
 	
@@ -255,11 +278,11 @@ public class Assignment3 extends PApplet{
 	  boolean nojump;
 	  boolean falling;
 	  
-	  int gHeight = 420;
+	  int gHeight = 460;
 	  int moveS = 3;
 	  
-	  float PH = 200;
-	  float PW = 200;
+	  float PH = 50;
+	  float PW = 50;
 	  float PX = 50;
 	  float PY;
 	  float gravityF = 5;
@@ -433,7 +456,7 @@ public class Assignment3 extends PApplet{
 	     fallacc = 4;
 	     FW = 200;
 	     FH = 300;
-	     gHeight = 500;
+	     gHeight = 480;
 	     fallX = random(2000,3000);
 	  }//end Fall constuctor
 	 
@@ -472,6 +495,14 @@ public class Assignment3 extends PApplet{
 	 //stopped code
 	 public void stopped()
 	 {
+		 for(int i = 0; i < 10; i++)
+		 {
+		 if( rock.get(i).RX > fallX  && rock.get(i).RX < fallX + FW )
+		   {
+			 rock.get(i).RX = random(1000,1500);
+		   }
+		 }
+		   
 	    //checks to see if player falls down the hole
 	    if( p.pos.x > fallX + p.PW/2 && p.pos.x < fallX + FW )
 	    {
@@ -519,7 +550,7 @@ public class Assignment3 extends PApplet{
 	   Star(int gHeight)
 	  {
 	    SW = 5;
-	    Sacc = 1f;
+	    Sacc = .1f;
 	    this.gHeight = gHeight;
 	  } 
 	  
@@ -544,6 +575,44 @@ public class Assignment3 extends PApplet{
 	        SW = random(2,5);
 	     }
 	  }
+	}
+	
+	class Rock {
+		
+		
+		  int gHeight= 500;;
+		  float RH = random(10,50);
+		  float RW = random(10,15);
+		  float RX = random(0,1000);
+		  float RY = random(gHeight, height);
+		  float Racc;
+		   
+		  Rock()
+		  {
+		    Racc = 4f;
+		  } 
+		  
+		  public void run()
+		  {
+		     move();
+		     reset(); 
+		  }
+		  // moves grass
+		  public void move()
+		  {
+		     RX -= Racc *(p.acc/100);
+		  }
+		  // resets grass
+		  public void reset()
+		  {
+		     if(RX < 0 - RW)
+		     {
+		        RX = random(1000,1500);
+		        RY = random(gHeight, height);
+		        RH = random(10,30);
+		        RW = random(10,15);
+		     }
+		  }
 	}
 	
 	 static public void main(String[] passedArgs) {

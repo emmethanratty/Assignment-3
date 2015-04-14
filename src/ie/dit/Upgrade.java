@@ -1,6 +1,6 @@
 package ie.dit;
 
-public class Upgrade {
+class Upgrade {
 	
 	Assignment3 p;
 	
@@ -84,7 +84,6 @@ public class Upgrade {
 	           {
 	             p.fuel.frequency -= 20;
 	             p.gameover.upgradeT = p.gameover.upgradeT - fuelP;
-	             p.println("worked");
 	             selected = '5';
 	             fuelP = fuelP * 1.2f;
 	              p.fill(255,0,0);
@@ -106,7 +105,6 @@ public class Upgrade {
 	           {
 	             p.p.moveS++;
 	             p.gameover.upgradeT = p.gameover.upgradeT - moveP;
-	             p.println("worked");
 	             selected = '5';
 	             moveP = moveP * 1.2f;
 	             p.fill(255,0,0);

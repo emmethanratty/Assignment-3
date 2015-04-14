@@ -1,26 +1,26 @@
 package ie.dit;
 
-public class Earth {
-	
+class Ship
+{
 	int gHeight = 420;
 	
 	Assignment3 p;
 	
-	float EH;
-	float EW;
-	float EX;
-	float EY;
-	float Eacc;
+	float SH;
+	float SW;
+	float SX;
+	float SY;
+	float Sacc;
 	
-	Earth(Assignment3 _p)
+	Ship(Assignment3 _p)
 	{
 		p = _p;
 		gHeight = 420;
-		EH = 400;
-		EW = 100;
-		EX = p.random(0 , 800);
-		EY = 50;
-		Eacc = .1f;
+		SH = 100;
+		SW = 300;
+		SX = p.random(0 , 800);
+		SY = 50;
+		Sacc = 1f;
 	}
 	
 	public void run()
@@ -32,15 +32,16 @@ public class Earth {
 	  //moves mountains... it must be love
 	  public void move()
 	  {
-	     EX -= Eacc *(p.p.acc/100);
+	     SX -= Sacc *(p.p.acc/100);
 	  }
 	  
 	  //resets the mountains
 	  public void reset()
 	  {
-	    if(EX < 0 - EW)
+	    if(SX < 0 - SW)
 	    {
-	       EX = p.random(2000,5000); 
+	       SX = p.random(2000,5000); 
+	       SY = p.random(0, 300);
 	    }
 	  
 	  }
