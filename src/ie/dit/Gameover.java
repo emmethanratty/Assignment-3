@@ -51,6 +51,8 @@ class Gameover
     {
       upgradeP = p.p.Gdis/100;
       upgradeT = upgradeT + upgradeP;
+      System.out.println(upgradeT);
+      System.out.println(upgradeP);
       
       NS = p.p.Gdis;
       
@@ -60,10 +62,9 @@ class Gameover
       //if the new score if bigger then current high score it sets it to new score
       if(NS > CHS)
       {
-         String NHS = Float.toString(NS);
-         String[] list = p.split(NHS,' ');
-         p.saveStrings("Highscore.txt", list);
-         //p.println(list);
+    	  String NHS = Float.toString(NS);
+          String[] list = p.split(NHS,' ');
+          p.saveStrings("Highscore.txt", list);
       }//end inner if 
     } 
   }
@@ -77,15 +78,10 @@ class Gameover
   
   public void update()
   {
-    //resets game
+
     if (p.gameO == '0')
     {
       p.option = '0';
-    }
-    //goes to main menu
-    if (p.gameO == '1')
-    {
-      p.option = '1';
-    }   
+    } 
   } 
 }

@@ -151,6 +151,8 @@ public class Assignment3 extends PApplet{
 				image(start,WIDTH/2 + 250,250,menuW,menuH);
 				image(upgradeI,WIDTH/2 + 250,400,menuW,menuH);
 				image(storyL,10,10,100,30);
+				
+				gameover.counter = 0;
 								
 				break;
 			}
@@ -502,36 +504,42 @@ public class Assignment3 extends PApplet{
 	    }
 	    if (checkKey(left))
 	    {
-	      if(falling == false)
-	      {
-	        if(pos.x > 0)
-	        {
-	          pos.x -= moveS;
-	          rollspeed = 2 *(acc/100);
-	          distance -= .1f;  
-	        }
-	      }
+	     if(option == '1')
+	     {
+		      if(falling == false)
+		      {
+		        if(pos.x > 0)
+		        {
+		          pos.x -= moveS;
+		          rollspeed = 2 *(acc/100);
+		          distance -= .1f;  
+		        }
+		      }
+		    }
+		    else
+		    {
+		      rollspeed = 4*(acc/100);
+		    }    
 	    }
-	    else
+	    if(option == '1')
 	    {
-	      rollspeed = 4*(acc/100);
-	    }    
-	    if (checkKey(right))
-	    {
-	      if(falling == false)
-	      {
-	        if(pos.x < width)
-	        {
-	          pos.x += moveS;
-	          rollspeed = 6*(acc/100);
-	          distance += .1f;
-	        }
-	      }
+		    if (checkKey(right))
+		    {
+		      if(falling == false)
+		      {
+		        if(pos.x < width)
+		        {
+		          pos.x += moveS;
+		          rollspeed = 6*(acc/100);
+		          distance += .1f;
+		        }
+		      }
+		    }
+		     else
+		    {
+		      rollspeed = 4*(acc/100);
+		    } 
 	    }
-	     else
-	    {
-	      rollspeed = 4*(acc/100);
-	    }   
 	  }
 
 	  //displays text and images  
@@ -563,7 +571,7 @@ public class Assignment3 extends PApplet{
 	   {
 	     if(option == '1')
 	     {
-	    	System.out.println("Moving");
+	    	//System.out.println("Moving");
 	       distance += .2f*(acc/100);
 	       acc -= .1f;
 	       // checks to see if stopped
@@ -655,8 +663,10 @@ public class Assignment3 extends PApplet{
 	           p.acc = 300;
 	           fallX = random(1500,2500);
 	           p.nofloor = false;
+	           p.falling = false;
 	           p.Gdis = p.distance;
 	           p.distance = 0;
+	           p.pos.x = 50;
 	        }//end inner if
 	      }//end inner if
 	    }//end outer if
