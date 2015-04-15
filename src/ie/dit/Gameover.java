@@ -16,7 +16,8 @@ class Gameover
      
   Gameover(Assignment3 _p)
   {
-	p = _p;  
+	p = _p; 
+	
 	  
     upgradeP = 0;
     upgradeT = 0;
@@ -52,6 +53,9 @@ class Gameover
       upgradeT = upgradeT + upgradeP;
       
       NS = p.p.Gdis;
+      
+      p.over.rewind();
+  	  p.over.play();
       
       //if the new score if bigger then current high score it sets it to new score
       if(NS > CHS)

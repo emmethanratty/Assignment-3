@@ -20,6 +20,10 @@ public class Assignment3 extends PApplet{
 	Minim minim;
 	AudioPlayer rocket;
 	AudioPlayer button;
+	AudioPlayer refill;
+	AudioPlayer over;
+	AudioPlayer smash;
+	AudioPlayer music;
 	
 	
 	int gHeight = 500;
@@ -73,6 +77,10 @@ public class Assignment3 extends PApplet{
 		 minim = new Minim(this);
 		 rocket = minim.loadFile("rocket.wav");
 		 button = minim.loadFile("button.wav");
+		 refill = minim.loadFile("refill.wav");
+		 over = minim.loadFile("over.mp3");
+		 smash = minim.loadFile("smash.wav");
+		 music = minim.loadFile("music.mp3");
 		 
 		 gameObjects = new GameObjects[1];
 		 gameover = new Gameover(this);
@@ -110,6 +118,7 @@ public class Assignment3 extends PApplet{
 		     rock.add(new Rock());
 		   }
 		 
+		 music.loop();
 	}
 
 	public void draw()
@@ -205,6 +214,9 @@ public class Assignment3 extends PApplet{
 	        fuel.FX = random(2000,fuel.frequency);
 	        fuel.FY = random(50,458);
 	        p.acc = p.acc + 20;
+	        
+	        refill.rewind();
+	        refill.play();
 	     }
 	   
 	   if(p.pos.x + debris.DW > debris.DX && p.pos.x < debris.DX + debris.DW && p.pos.y + p.PY > debris.DY && p.pos.y < debris.DY + debris.DH )
@@ -212,6 +224,9 @@ public class Assignment3 extends PApplet{
 	        debris.DX = random(2000,2100);
 	        debris.DY = random(50,gHeight);
 	        p.acc = p.acc - 50;
+	        
+	        smash.rewind();
+	        smash.play();
 	     }
 	}//end hitbox
 	
@@ -358,12 +373,13 @@ public class Assignment3 extends PApplet{
 		//System.out.println(option);
 	    if (checkKey(up))
 	    {
-	      rocket.rewind();
-	      rocket.play();
 	      if(option == '1')
 	      {
 	         if(pos.y > jumpH && nofloor == false)
-	          {        
+	          {  
+	        	 rocket.rewind();
+	   	         rocket.play();
+	   	      
 	               pos.y -= 5;
 	          } 
 	          else
