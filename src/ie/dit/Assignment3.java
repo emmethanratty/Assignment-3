@@ -39,6 +39,7 @@ public class Assignment3 extends PApplet{
 	Gameover gameover;
 	Upgrade upgrade;
 	Debris debris;
+	Story story;
 	
 	Earth earth = new Earth(this);
 	Fuel fuel;
@@ -57,7 +58,14 @@ public class Assignment3 extends PApplet{
 	PImage debrisI;
 	PImage shipI;
 	PImage rockI;
-
+	PImage storyI;
+	PImage back;
+	PImage storyL;
+	PImage moveS;
+	PImage fuelF;
+	PImage fuelT;
+	PImage jump;
+	PImage upgradepoint;
 	
 	
 	
@@ -86,7 +94,8 @@ public class Assignment3 extends PApplet{
 		 gameover = new Gameover(this);
 		 upgrade = new Upgrade(this);
 		 debris = new Debris(this);
-		 ship = new Ship(this);		 
+		 ship = new Ship(this);	
+		 story = new Story(this);
 		 
 		 setUpPlayerControllers();
 		 
@@ -105,6 +114,15 @@ public class Assignment3 extends PApplet{
 		 gameoverI = loadImage("gameover.png");
 		 debrisI = loadImage("crate.png");
 		 shipI = loadImage("spaceship.png");
+		 storyL = loadImage("stopyL.png");
+		 storyI = loadImage("story.png");
+		 back = loadImage("back.png");
+		 moveS = loadImage("movespeed.png");
+		 jump = loadImage("jump.png");
+		 fuelT = loadImage("tanks.png");
+		 fuelF = loadImage("fuelF.png");
+		 upgradepoint = loadImage("upgradepoints.png");
+		 
 		 counter=0.0f;
 		 
 		 fuel = new Fuel(this);
@@ -132,6 +150,7 @@ public class Assignment3 extends PApplet{
 				image(title,WIDTH/2 + 200,20,600,200);
 				image(start,WIDTH/2 + 250,250,menuW,menuH);
 				image(upgradeI,WIDTH/2 + 250,400,menuW,menuH);
+				image(storyL,10,10,100,30);
 								
 				break;
 			}
@@ -204,6 +223,13 @@ public class Assignment3 extends PApplet{
 				
 				break;
 			}
+			case '4':
+			{
+				background(moon);
+				
+				story.run();
+				break;
+			}
 		}
 	}
 	
@@ -256,12 +282,50 @@ public class Assignment3 extends PApplet{
 					System.out.println("Pressed2");
 				}
 			}
+			if(mouseX > (10) && mouseX < (110) + menuW )
+			{
+				if(mouseY > 10 && mouseY < 40)
+				{
+					button.rewind();
+					button.play();
+					option = '4';
+					System.out.println("Pressed3");
+				}
+			}
+			
+		}
+		if(option == '2')
+		{
+			if(mouseX > (10) && mouseX < (110) + menuW )
+			{
+				if(mouseY > 550 && mouseY < 590)
+				{
+					button.rewind();
+					button.play();
+					option = '0';
+					System.out.println("Pressed6");
+				}
+			}
 		}
 		if(option == '3')
 		{
 			button.rewind();
 			button.play();
 			gameO = '0';
+		}
+		if(option == '4')
+		{
+			if(mouseX > (10) && mouseX < (110) + menuW )
+			{
+				if(mouseY > 550 && mouseY < 590)
+				{
+					button.rewind();
+					button.play();
+					option = '0';
+					System.out.println("Pressed5");
+				}
+			}
+			
 		}
 	}
 	

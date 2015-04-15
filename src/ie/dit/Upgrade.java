@@ -30,7 +30,12 @@ class Upgrade {
 	  
 	  public void display()
 	  {
-		  
+		  p.image(p.back, 10, 550, 100, 30);
+		  p.image(p.fuelT, 150, 200, 300, 100);
+		  p.image(p.fuelF, 150, 400, 300, 100);
+		  p.image(p.jump, 500, 200, 300, 100);
+		  p.image(p.moveS, 500, 400, 300, 100);
+		  p.image(p.upgradepoint, 250 , 30, 400,100);
 	  }
 	  
 	  public void update()
