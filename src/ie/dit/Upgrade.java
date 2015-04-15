@@ -31,11 +31,31 @@ class Upgrade {
 	  public void display()
 	  {
 		  p.image(p.back, 10, 550, 100, 30);
+		  
 		  p.image(p.fuelT, 150, 200, 300, 100);
+		  p.textSize(50);
+          p.text("Price: " + accP, 150 ,350);
+		  
+		  
 		  p.image(p.fuelF, 150, 400, 300, 100);
+		  p.textSize(50);
+          p.text("Price: " + fuelP, 150 ,550);
+          
+          
 		  p.image(p.jump, 500, 200, 300, 100);
+		  p.textSize(50);
+          p.text("Price: " + jumpP, 500 ,350);
+          
+		  
 		  p.image(p.moveS, 500, 400, 300, 100);
-		  p.image(p.upgradepoint, 250 , 30, 400,100);
+		  p.textSize(50);
+          p.text("Price: " + moveP, 500 ,550);
+          
+		  
+		  p.image(p.upgradepoint, 250 , 30, 400,90);
+		  p.fill(220,87,29);
+		  p.textSize(90);
+          p.text(p.gameover.upgradeT, 650 ,100);
 	  }
 	  
 	  public void update()

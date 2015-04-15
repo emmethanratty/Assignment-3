@@ -306,6 +306,43 @@ public class Assignment3 extends PApplet{
 					System.out.println("Pressed6");
 				}
 			}
+			if(mouseX > 150 && mouseX < (450) )
+			{
+				if(mouseY > 200 && mouseY < 300)
+				{
+					button.rewind();
+					button.play();
+					upgrade.selected = '1';
+				}
+			}
+			if(mouseX > 150 && mouseX < (450) )
+			{
+				if(mouseY > 400 && mouseY < 500)
+				{
+					button.rewind();
+					button.play();
+					upgrade.selected = '2';
+					
+				}
+			}
+			if(mouseX > 500 && mouseX < (800) )
+			{
+				if(mouseY > 400 && mouseY < 500)
+				{
+					button.rewind();
+					button.play();
+					upgrade.selected = '3';
+				}
+			}
+			if(mouseX > 500 && mouseX < (800) )
+			{
+				if(mouseY > 200 && mouseY < 300)
+				{
+					button.rewind();
+					button.play();
+					upgrade.selected = '0';
+				}
+			}
 		}
 		if(option == '3')
 		{
